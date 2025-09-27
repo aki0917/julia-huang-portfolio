@@ -1,0 +1,1033 @@
+// ========================================
+// Variables
+// ========================================
+
+// Colors
+$color-bg: #F9F1F0;
+$color-card: #FADCD9;
+$color-accent: #F8AFA6;
+$color-text: #000000;
+$color-white: #FFFFFF;
+
+// Typography
+$font-primary: 'Poppins', sans-serif;
+$font-secondary: 'Roboto', sans-serif;
+
+// Font Weights
+$fw-light: 300;
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semibold: 600;
+$fw-bold: 700;
+
+// Font Sizes
+$fs-xs: 15px;
+$fs-sm: 16px;
+$fs-md: 20px;
+$fs-lg: 25px;
+$fs-xl: 55px;
+$fs-xxl: 56px;
+
+// Spacing
+$spacing-xs: 8px;
+$spacing-sm: 16px;
+$spacing-md: 24px;
+$spacing-lg: 32px;
+$spacing-xl: 48px;
+$spacing-xxl: 64px;
+
+// Border Radius
+$radius: 20px;
+$radius-sm: 16px;
+
+// Breakpoints
+$breakpoints: (
+  "sp": "(max-width: 768px)",
+  "tab": "(min-width: 769px) and (max-width: 1024px)",
+  "pc": "(min-width: 1025px)"
+);
+
+// Grid Layout (PC)
+$grid-cols-pc: 565px 330px 448px;
+$pc-col1: 565px; 
+$card-w: 448px;   
+$pull: 565px - 448px;
+$grid-gap: 24px;
+$max-width: 1391px;
+
+// ========================================
+// Mixins
+// ========================================
+
+@mixin mq($breakpoint: sp) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+
+@mixin aspect-ratio($width, $height) {
+  aspect-ratio: #{$width} / #{$height};
+  overflow: hidden;
+}
+
+@mixin focus-visible {
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
+  }
+}
+
+// ========================================
+// Base Styles
+// ========================================
+
+body {
+  font-family: $font-secondary;
+  font-weight: $fw-light;
+  font-size: $fs-sm;
+  line-height: 1.5;
+  color: $color-text;
+  background-color: $color-bg;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// ========================================
+// Layout
+// ========================================
+
+.container {
+  max-width: $max-width;
+  margin: 0 auto;
+}
+
+.main {
+  display: grid;
+  gap: $grid-gap;
+  margin-top: $spacing-md;
+  
+  // PC Layout (1025px+)
+  @include mq(pc) {
+    grid-template-columns: 565px 330px 448px;
+    gap: 24px;
+    max-width: 1391px;
+    margin: 0 auto;
+    grid-template-areas:
+      "head     portrait work"
+      "about    contact work"
+      "about    contact  socials";
+  }
+  
+  // Tablet Layout (769px-1024px)
+  @include mq(tab) {
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-md;
+    grid-template-areas:
+      "head     portrait"
+      "work     work"
+      "about    contact"
+      "socials  socials";
+  }
+  
+  // Mobile Layout (768px-)
+  @include mq(sp) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "head"
+      "portrait"
+      "work"
+      "about"
+      "contact"
+      "socials";
+  }
+}
+
+// ========================================
+// Header
+// ========================================
+
+.header {
+  background-color: $color-card;
+  border-radius: $radius;
+  padding: $spacing-md;
+  margin-top: $spacing-md;
+  margin-bottom: $spacing-md;
+  
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: $max-width;
+    margin: 0 auto;
+  }
+  
+  &__logo {
+    font-family: $font-primary;
+    font-size: $fs-lg;
+    font-weight: $fw-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+  
+  &__nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 48px;
+    align-items: center;
+    
+    @include mq(tab) {
+      gap: $spacing-xl;
+    }
+    
+    @include mq(sp) {
+      gap: $spacing-md;
+    }
+  }
+  
+  &__nav-link {
+    font-family: $font-primary;
+    font-weight: $fw-light;
+    font-size: $fs-sm;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    transition: opacity 0.2s ease;
+    
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+// ========================================
+// Slogan Section
+// ========================================
+
+.slogan {
+  grid-area: head;
+  background-color: $color-card;
+  border-radius: $radius;
+  width: 100%;
+  height: 479px;
+  position: relative;
+  
+  &__content {
+    position: relative;
+    z-index: 2;
+    padding: 0;
+    height: 100%;
+  }
+  
+  &__title {
+    font-family: $font-primary;
+    font-weight: $fw-bold;
+    font-size: 56px;
+    line-height: 1;
+    margin: 0;
+    position: absolute;
+    top: 225px;
+    left: 24px;
+    width: calc(100% - 48px);
+    height: 168px;
+    
+    @include mq(tab) {
+      font-size: 40px;
+      width: 100%;
+      height: auto;
+      margin: $spacing-lg 0;
+      top: 125px;
+      left: 0;
+    }
+    
+    @include mq(sp) {
+      font-size: 32px;
+      position: static;
+      width: 100%;
+      height: auto;
+      text-align: center;
+      line-height: 1.1;
+      margin: 0;
+    }
+  }
+  
+  &__icon {
+    position: absolute;
+    top: 34px;
+    right: 30px;
+    z-index: 1;
+    width: 119px;
+    height: 119px;
+    
+    @include mq(tab) {
+      position: static;
+      margin-top: $spacing-md;
+      width: 80px;
+      height: 80px;
+      align-self: flex-end;
+    }
+    
+    @include mq(sp) {
+      position: static;
+      margin-top: $spacing-md;
+      width: 60px;
+      height: 60px;
+      align-self: center;
+    }
+  }
+  
+  &__icon-img {
+    max-width: 100%;
+    height: 100%;
+  }
+  
+  @include mq(tab) {
+    height: auto;
+    padding: $spacing-lg;
+    
+    &__content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+  
+  @include mq(sp) {
+    height: auto;
+    padding: $spacing-md;
+    
+    &__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    &__icon {
+      order: 1; 
+      margin-bottom: $spacing-md;
+      margin-top: 0;
+    }
+    
+    &__title {
+      order: 2; // タイトルを下に配置
+      margin-top: $spacing-md;
+      margin-bottom: 0;
+    }
+  }
+}
+
+// ========================================
+// Portrait Section
+// ========================================
+
+.portrait {
+  grid-area: portrait;
+  width: 100%;
+  
+  &__image {
+    border-radius: $radius;
+    overflow: hidden;
+    @include aspect-ratio(330, 476);
+  }
+  
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  @include mq(tab) {
+    &__image {
+      @include aspect-ratio(1, 1.2);
+    }
+  }
+}
+
+// ========================================
+// Work Section
+// ========================================
+
+.work {
+  grid-area: work;
+  background-color: $color-card;
+  border-radius: $radius;
+  width: 100%;
+  height: 726px;
+  position: relative;
+  
+  &__content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  &__item {
+    position: absolute;
+    
+    &:nth-child(1) {
+      top: 34px;
+      left: 24px;
+      width: calc(100% - 48px);
+      height: 350px;
+      
+      @include mq(tab) {
+        height: auto;
+      }
+    }
+    
+    &:nth-child(2) {
+      top: 425px;
+      left: 24px;
+      width: calc(100% - 48px);
+      height: 72px;
+    }
+    
+    &:nth-child(3) {
+      top: 538px;
+      left: 24px;
+      width: calc(100% - 48px);
+      height: 71px;
+    }
+    
+    &:nth-child(4) {
+      top: 651px;
+      left: 24px;
+      width: 79.62px;
+      height: 30.49px;
+    }
+    
+    &--featured {
+      .work__item-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+    }
+  }
+  
+  &__item-image {
+    position: absolute;
+    top: 51px;
+    left: 0;
+    width: 100%;
+    height: 269px;
+    border-radius: $radius-sm;
+    overflow: hidden;
+  }
+  
+  &__item-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  &__item-title {
+    font-family: $font-primary;
+    font-weight: $fw-medium;
+    font-size: 25px;
+    line-height: 1.213;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  &__item-arrow {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    width: 26px;
+    height: 26px;
+    
+    @include mq(tab) {
+      position: absolute;
+    }
+  }
+  
+  &__item-arrow-img {
+    max-width: 100%;
+  }
+  
+  // Border line for items
+  &__item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: $color-accent;
+
+    @include mq(tab) { 
+      content: none;        
+      display: none;    
+    }
+
+    @include mq(sp) { 
+      content: none;        
+      display: none;    
+    }
+  }
+  
+  // Tablet Layout
+  @include mq(tab) {
+    width: 100%;
+    height: auto;
+    padding: $spacing-lg;
+    
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-lg;
+    }
+    
+    &__item {
+      position: static;
+      width: 100%;
+      height: auto;
+      padding-bottom: $spacing-lg;
+      border-bottom: 2px solid $color-accent;
+      display: flex;
+      flex-direction: column;
+      
+      &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      
+      &--featured {
+        .work__item-content {
+          position: static;
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: $spacing-md;
+        }
+      }
+    }
+    
+    &__item-image {
+      position: static;
+      width: 100%;
+      height: auto;
+      @include aspect-ratio(16, 9);
+      order: 2;
+    }
+    
+    &__item-title {
+      position: static;
+      margin-bottom: $spacing-sm;
+    }
+    
+    &__item-arrow {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      flex-shrink: 0;
+    }
+  }
+  
+  // Mobile Layout
+  @include mq(sp) {
+    width: 100%;
+    height: auto;
+    padding: $spacing-md;
+    
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-lg;
+    }
+    
+    &__item {
+      position: static;
+      width: 100%;
+      height: auto;
+      text-align: left;
+      padding-bottom: $spacing-lg;
+      border-bottom: 2px solid $color-accent;
+      
+      &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      
+      &--featured {
+        display: flex;
+        flex-direction: column;
+        
+        .work__item-content {
+          position: static;
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          order: 1; 
+          margin-bottom: $spacing-md;
+        }
+      }
+    }
+    
+    &__item-image {
+      position: static;
+      width: 100%;
+      height: auto;
+      @include aspect-ratio(16, 9);
+      border-radius: $radius-sm;
+      margin-bottom: $spacing-sm;
+      
+      .work__item--featured & {
+        order: 2;
+      }
+    }
+    
+    &__item-title {
+      position: static;
+      font-size: 22px;
+      margin-bottom: $spacing-sm;
+    }
+    
+    &__item-arrow {
+      position: absolute;
+      top: 5px;
+      right: 50px;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+  }
+}
+
+// ========================================
+// About Section
+// ========================================
+
+.about {
+  grid-area: about;
+  background-color: $color-card;
+  border-radius: $radius;
+  width: $card-w;
+  height: 351px;
+  position: relative;
+  
+  &__content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  &__icon {
+    position: absolute;
+    top: 32px;
+    left: 24px;
+    width: 38px;
+    height: 38px;
+  }
+  
+  &__icon-img {
+    width: 100%;
+    height: 100%;
+  }
+  
+  &__text {
+    position: absolute;
+    top: 155px;
+    left: 24px;
+    width: calc(100% - 48px);
+    height: 150px;
+    font-family: $font-secondary;
+    font-weight: $fw-light;
+    font-size: 20px;
+    line-height: 1.25;
+    margin: 0;
+  }
+  
+  // Tablet Layout
+  @include mq(tab) {
+    width: 100%;
+    height: auto;
+    padding: $spacing-lg;
+    
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-lg;
+    }
+    
+    &__icon {
+      position: static;
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+    }
+    
+    &__text {
+      position: static;
+      width: 100%;
+      height: auto;
+      font-size: 18px;
+    }
+  }
+  
+  // Mobile Layout
+  @include mq(sp) {
+    width: 100%;
+    height: auto;
+    padding: $spacing-md;
+    text-align: left;
+    
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-md;
+    }
+    
+    &__icon {
+      position: static;
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+    
+    &__text {
+      position: static;
+      width: 100%;
+      height: auto;
+      font-size: 18px;
+      line-height: 1.4;
+    }
+  }
+}
+
+// ========================================
+// Contact Section
+// ========================================
+
+.contact {
+  grid-area: contact;
+  background-color: $color-accent;
+  border-radius: $radius;
+  width: $card-w;
+  justify-self: start;
+  margin-left: -$pull; 
+  height: 351px;
+  position: relative;
+  z-index: 1;
+  
+  &__content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  &__header {
+    position: absolute;
+    top: 30px;
+    left: 24px;
+    width: calc(100% - 48px);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+  }
+  
+  &__subtitle {
+    font-family: $font-secondary;
+    font-weight: $fw-light;
+    font-size: 15px;
+    line-height: 1.153;
+    margin: 0;
+  }
+  
+  &__arrow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 38px;
+    height: 38px;
+  }
+  
+  &__title {
+    position: absolute;
+    top: 240px;
+    left: 24px;
+    width: calc(100% - 48px);
+    height: 39px;
+    font-family: $font-primary;
+    font-weight: $fw-medium;
+    font-size: 55px;
+    line-height: 1.213;
+    margin: 0;
+  }
+  
+  // Tablet Layout
+  @include mq(tab) {
+    width: 100%;
+    height: auto;
+    padding: $spacing-lg;
+    margin-left: 0;
+    z-index: auto;
+    
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-lg;
+    }
+    
+    &__header {
+      position: static;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: $spacing-lg;
+    }
+    
+    &__subtitle {
+      position: static;
+      max-width: 200px;
+    }
+    
+    &__arrow {
+      position: static;
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+
+      &-img {
+        max-width: 100%;
+      }
+    }
+    
+    &__title {
+      position: static;
+      width: 100%;
+      height: auto;
+      font-size: 48px;
+    }
+  }
+  
+  // Mobile Layout
+  @include mq(sp) {
+    width: 100%;
+    height: auto;
+    padding: $spacing-md;
+    text-align: left;
+    justify-self: end;
+    
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-lg;
+    }
+    
+    &__header {
+      position: static;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-sm;
+    }
+    
+    &__subtitle {
+      position: static;
+      max-width: 200px;
+    }
+    
+    &__arrow {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+    
+    &__title {
+      position: static;
+      width: 100%;
+      height: auto;
+      font-size: 42px;
+      line-height: 1.1;
+      margin-top: $spacing-md;
+    }
+  }
+}
+
+// ========================================
+// Socials Section
+// ========================================
+
+.socials {
+  grid-area: socials;
+  background-color: $color-card;
+  border-radius: $radius;
+  width: 100%;
+  height: 101px;
+  position: relative;
+  
+  &__content {
+    position: absolute;
+    top: 45px;
+    left: 57px;
+    width: calc(100% - 114px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 65px;
+  }
+  
+  &__link {
+    font-family: $font-primary;
+    font-weight: $fw-light;
+    font-size: 15px;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: opacity 0.2s ease;
+    
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+  
+  // Tablet Layout
+  @include mq(tab) {
+    height: auto;
+    padding: $spacing-lg;
+    
+    &__content {
+      position: static;
+      width: 100%;
+      gap: $spacing-xl;
+      padding: 0;
+    }
+  }
+  
+  // Mobile Layout
+  @include mq(sp) {
+    height: auto;
+    padding: $spacing-md;
+    
+    &__content {
+      position: static;
+      width: 100%;
+      gap: $spacing-md;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    &__link {
+      font-size: 14px;
+      padding: $spacing-xs 0;
+    }
+  }
+}
+
+// ========================================
+// Responsive 
+// ========================================
+
+// Mobile Adjustments
+@include mq(sp) {
+  .container {
+    padding: 0 $spacing-sm;
+  }
+  
+  .main {
+    margin-top: $spacing-sm;
+    gap: $spacing-sm;
+  }
+  
+  .header {
+    padding: $spacing-sm $spacing-md;
+    margin-bottom: $spacing-sm;
+    
+    &__content {
+      flex-direction: column;
+      gap: $spacing-sm;
+      text-align: center;
+    }
+    
+    &__logo {
+      font-size: 24px;
+    }
+    
+    &__nav-list {
+      gap: $spacing-lg;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    &__nav-link {
+      font-size: 14px;
+      padding: $spacing-xs $spacing-sm;
+    }
+  }
+  
+  // Slogan 
+  .slogan {
+    padding: $spacing-md;
+    text-align: center;
+    
+    &__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: $spacing-md;
+    }
+    
+    &__title {
+      font-size: 32px;
+      text-align: center;
+      line-height: 1.1;
+    }
+    
+    &__icon {
+      width: 60px;
+      height: 60px;
+    }
+  }
+}
+
+@include mq(tab) {
+  .container {
+    padding: 0 $spacing-md;
+  }
+  
+  .main {
+    gap: $spacing-md;
+    margin-top: $spacing-md;
+  }
+  
+  .header {
+    padding: $spacing-md;
+    margin-bottom: $spacing-md;
+    
+    &__content {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    
+    &__nav-list {
+      gap: $spacing-lg;
+    }
+  }
+  
+  .slogan {
+    &__title {
+      font-size: 40px;
+    }
+  }
+}
